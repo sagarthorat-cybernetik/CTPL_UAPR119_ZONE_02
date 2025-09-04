@@ -11,7 +11,7 @@ class Calling_Butn(QDialog):
                 self.paths_data = json.load(json_file)
             # Load station_no from paths.json instead of inputs
             # self.root_Path = self.paths_data["Root_Path"]
-            self.root_Path = self.paths_data["Development_Path"]
+            self.root_Path = self.paths_data["Root_Path"]
             super(Calling_Butn, self).__init__()
             self.ui_path = self.root_Path
             ui_file = os.path.join(self.ui_path, "Call_btns_dialog.ui")

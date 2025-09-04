@@ -181,7 +181,7 @@ class GUI_load(QMainWindow):
 
         # Load station_no from paths.json instead of inputs
         # self.root_Path = self.paths_data["Root_Path"]
-        self.root_Path = self.paths_data["Development_Path"]
+        self.root_Path = self.paths_data["Root_Path"]
         web_station= ["03","04","07"]
         if station_no in web_station:
             ui_file = os.path.join(self.root_Path,"Station_GUI_livgaurd_Zone_02_with_web.ui")
@@ -954,10 +954,10 @@ class GUI_load(QMainWindow):
             # Load video path from paths.json
             recipe_no = str(recipe_no)
             recipes = ["1", "2", "3", "4", "5"]
-            video_path = os.path.join(self.paths_data["Development_Path"], "Video.mp4")
+            video_path = os.path.join(self.paths_data["Root_Path"], "Video.mp4")
             if recipe_no not in recipes:
                 recipe_no = self.ui_second_window.recipe_no
-                video_path = os.path.join(self.paths_data["Development_Path"], "Video.mp4")
+                video_path = os.path.join(self.paths_data["Root_Path"], "Video.mp4")
             else:
                 video_path = self.paths_data["video_path"][f"recipe_0{recipe_no}"]
             filename = video_path
