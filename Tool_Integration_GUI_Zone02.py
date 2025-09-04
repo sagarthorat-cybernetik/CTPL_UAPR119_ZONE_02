@@ -317,7 +317,7 @@ class GUI_load(QMainWindow):
         self.load_previous_video()
 
         # PLC connection class call pass ip and port
-        self.modbus_worker = ModbusWorker(host="192.168.205.161", port=502)
+        self.modbus_worker = ModbusWorker(host="192.168.205.81", port=502)
         self.modbus_worker.update_gui_signal.connect(self.update_gui)
         self.modbus_worker.start()
 
