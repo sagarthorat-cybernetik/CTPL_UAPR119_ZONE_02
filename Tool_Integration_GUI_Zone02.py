@@ -980,13 +980,13 @@ class GUI_load(QMainWindow):
                 self.web_view.setParent(self.Webpage)
                 self.web_view.setGeometry(0,0,self.Webpage.width(),self.Webpage.height())
                 # self.web_view.setUrl(QUrl("http://192.168.205.110/pages/hmi/"))
-                url = "https://www.google.com/"
+                url = "http://192.168.205.110/pages/hmi/"
                 if staion_no == "03":
-                    url ="https://www.youtube.com/"
+                    url ="http://192.168.205.110/pages/hmi/"
                 elif staion_no == "04":
-                    url = "https://www.wikipedia.com/"
+                    url = "http://192.168.205.117/pages/hmi/"
                 elif staion_no == "07":
-                    url = "https://www.facebook.com/"
+                    url = "http://192.168.205.136/pages/hmi/"
                 self.web_view.setUrl(QUrl(url))
 
                 self.web_view.show()
