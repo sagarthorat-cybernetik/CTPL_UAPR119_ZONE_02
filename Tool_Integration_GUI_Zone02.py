@@ -336,9 +336,9 @@ class GUI_load(QMainWindow):
 
     # Update GUI value
     def update_gui(self, values):
-        with open('dummydata.json', 'r') as json_file:
-            values = json.load(json_file)
-        values = values["values"]
+        # with open('dummydata.json', 'r') as json_file:
+        #     values = json.load(json_file)
+        # values = values["values"]
         try:
             if values[0] == None:
                 self.PLC_Connection_sts.setStyleSheet("background-color: rgb(255, 34, 16);")
