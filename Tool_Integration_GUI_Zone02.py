@@ -370,8 +370,6 @@ class GUI_load(QMainWindow):
             for i in range(14,26):
                 convert_id=self.dword_to_chars(values[0][i])
                 self.battery_id2+=convert_id
-            self.battery_id1="z2b2123456789"
-            self.battery_id2= ""
             self.Battery_id_lbl.setText(self.battery_id1)
             self.Battery_id_lbl_2.setText(self.battery_id2)
 
