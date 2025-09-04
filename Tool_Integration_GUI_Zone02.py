@@ -986,7 +986,7 @@ class GUI_load(QMainWindow):
                 elif staion_no == "04":
                     url = "http://192.168.205.117/pages/hmi/"
                 elif staion_no == "07":
-                    url = "http://192.168.205.136/pages/hmi/"
+                    url = "http://192.168.205.136"
                 self.web_view.setUrl(QUrl(url))
 
                 self.web_view.show()
