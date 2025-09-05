@@ -366,10 +366,14 @@ class GUI_load(QMainWindow):
             self.battery_id2=""
             for i in range(1,13):
                 convert_id=self.dword_to_chars(values[0][i])
-                self.battery_id1+=convert_id
+                self.battery_id1+=str(convert_id)
             for i in range(14,26):
                 convert_id=self.dword_to_chars(values[0][i])
-                self.battery_id2+=convert_id
+                self.battery_id2+=str(convert_id)
+            # Remove extra nulls and spaces
+            self.battery_id1 = self.battery_id1.strip().replace("\x00", "")
+            self.battery_id2 = self.battery_id2.strip().replace("\x00", "")
+
             self.Battery_id_lbl.setText(self.battery_id1)
             self.Battery_id_lbl_2.setText(self.battery_id2)
 
@@ -670,6 +674,7 @@ class GUI_load(QMainWindow):
                     QtWidgets.QMessageBox.information(self, "Welcome", f"Hello, {name}!")
                     # you can store the name in a variable
                     self.loggedinuser = name.strip()
+                    self.operator_2.setText(self.loggedinuser)
                 else:
                     QtWidgets.QMessageBox.warning(self, "Invalid", "Operator name cannot be empty.")
                     return
@@ -1138,7 +1143,7 @@ class GUI_load(QMainWindow):
         print("file copied Succesfully")
 
     def sendstatusforvisualinspection(self,status):
-        self.modbus_worker.client.write_single_register(436, status)
+        self.modbus_worker.client.write_single_register(438, status)
 
 if __name__ == "__main__":
     import sys

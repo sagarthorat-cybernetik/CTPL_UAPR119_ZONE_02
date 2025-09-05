@@ -84,7 +84,6 @@ class Ui_SecondWindow(QMainWindow):
                 table_data.append(",".join(row_data))
             # Update the JSON object with the new table data
             data["table_data"][f"recipe_0{self.recipe_no}"] = table_data
-
             # Write the updated data back to the JSON file
             with open('paths.json', 'w') as json_file:
                 json.dump(data, json_file, indent=4)
