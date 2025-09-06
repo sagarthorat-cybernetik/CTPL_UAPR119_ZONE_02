@@ -168,6 +168,7 @@ class ModbusWorker(QThread):
 class GUI_load(QMainWindow):
     def __init__(self):
         # Load paths.json file
+        self.recipe_no = "1"
         self.station_name = None
         self.new_img_path = None
         with open('paths.json', 'r') as json_file:
@@ -275,7 +276,7 @@ class GUI_load(QMainWindow):
         self.ui_second_window.video_btn.clicked.connect(self.open_video_file)
         self.ui_second_window.pdf_Brows_btn.clicked.connect(self.Open_PDF)
         self.ui_second_window.input_setting_changes.clicked.connect(self.save_Input_setting_data)
-        self.ui_second_window.set_password.clicked.connect(self.loadDataFromFile)
+        self.ui_second_window.dataSaved.connect(self.loadDataFromFile)
 
         # ===== Date Time Timer ============================
         self.timer_1 = QTimer()
@@ -307,7 +308,6 @@ class GUI_load(QMainWindow):
         self.video_capture = None
         self.video_fps = 0
         self.playing = False
-
         # Default Functions Call
         self.loadDataFromFile()
         self.IMG_load()
@@ -390,8 +390,8 @@ class GUI_load(QMainWindow):
             self.Actual_prod_count.setText(str(values[0][33]))
             if self.station_name != "05":
                 self.Screw_position.setText(str(values[0][34]))
-
-            if values[0][36] != self.temp:
+            self.recipe_no = str(values[0][36]).strip()
+            if values[0][36] != self.temp or self.isreloaded:
                 self.loadDataFromFile(str(values[0][36]))
                 self.IMG_load(str(values[0][36]))
                 self.load_pdf(str(values[0][36]))
@@ -436,15 +436,11 @@ class GUI_load(QMainWindow):
 
             # Reload input data and update UI
             self.Input_Data_Load()
-            # Check restart condition
-
-            web_station = ["03", "04", "07"]
-            if self.station_name in web_station or prev_station in web_station:
-                self.msgBox.setText("Please Restart the Application.")
-                self.msgBox.setWindowTitle("Success")
-                self.msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
-                self.msgBox.exec_()
-                return
+            # restart condition
+            self.msgBox.setText("Please Restart the Application.")
+            self.msgBox.setWindowTitle("Success")
+            self.msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            self.msgBox.exec_()
         except Exception as e:
             print(f"Error in the save input setting data: {e}")
 
@@ -707,13 +703,15 @@ class GUI_load(QMainWindow):
     def loadDataFromFile(self, recipe_no="1"):
         try:
             # Load table data from JSON
+            recipe_no = self.recipe_no.strip()
             recipe_no = str(recipe_no)
             recipes = ["1", "2", "3", "4", "5"]
             if recipe_no not in recipes:
                 recipe_no = self.ui_second_window.recipe_no
             # Save updated JSON data to file
-            with open('paths.json', 'w') as json_file:
-                json.dump(self.paths_data, json_file, indent=4)
+            with open('paths.json', 'r') as json_file:
+                self.paths_data = json.load(json_file)
+
             table_data = self.paths_data["table_data"][f"recipe_0{recipe_no}"]
             self.tableWidget.setRowCount(len(table_data))
             for row, line in enumerate(table_data):

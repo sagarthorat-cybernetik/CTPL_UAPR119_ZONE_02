@@ -5,12 +5,14 @@ from PyQt5.QtWidgets import QFileDialog
 from PyQt5.uic import loadUi
 import cv2
 import json
+import os
 
 class Ui_SecondWindow(QMainWindow):
+    dataSaved = QtCore.pyqtSignal()  # Signal emitted after saving data
     def __init__(self):
+        super().__init__()
         try:
-            self.dataSaved = QtCore.pyqtSignal()  # Signal emitted after saving data
-            super(Ui_SecondWindow, self).__init__()
+            # super(Ui_SecondWindow, self).__init__()
             loadUi(r"./Setting.ui", self)
             self.new_row_Btn.clicked.connect(self.addNewRow)
             self.delete_row_Btn.clicked.connect(self.deleteLastRow)
@@ -69,7 +71,7 @@ class Ui_SecondWindow(QMainWindow):
         try:
             # Read the existing data from paths.json
             with open('paths.json', 'r') as json_file:
-                data = json.load(json_file)
+                self.paths_data = json.load(json_file)
 
             # Prepare the table data
             rows = self.User_table.rowCount()
@@ -83,12 +85,16 @@ class Ui_SecondWindow(QMainWindow):
                     row_data.append(item.text() if item else "")
                 table_data.append(",".join(row_data))
             # Update the JSON object with the new table data
-            data["table_data"][f"recipe_0{self.recipe_no}"] = table_data
+            self.paths_data["table_data"][f"recipe_0{self.recipe_no}"] = table_data
             # Write the updated data back to the JSON file
             with open('paths.json', 'w') as json_file:
-                json.dump(data, json_file, indent=4)
+                json.dump(self.paths_data, json_file, indent=4)
+                json_file.flush()
+                os.fsync(json_file.fileno())
+
             QtWidgets.QMessageBox.information(self, "Table Updated", "Table data saved successfully.")
-            # self.dataSaved.emit()  # Emit the signal after saving
+            self.dataSaved.emit()  # Emit the signal after saving
+
         except Exception as e:
             QtWidgets.QMessageBox.critical(self, "Error Saving Data", f"Error saving data: {e}")
 
