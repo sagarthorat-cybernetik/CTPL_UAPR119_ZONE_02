@@ -529,7 +529,7 @@ class GUI_load(QMainWindow):
             recipes = ["1", "2", "3", "4", "5"]
             if recipe_no not in recipes:
                 recipe_no = self.ui_second_window.recipe_no
-                img_path = os.path.join(self.paths_data["Root_Path"], "./invalid.png")
+                img_path = os.path.join(self.paths_data["Root_Path"], "invalid.png")
             else:
                 img_path = self.paths_data["inputs"]["image_path"][f"recipe_0{recipe_no}"]
             if os.path.exists(img_path):
@@ -538,7 +538,7 @@ class GUI_load(QMainWindow):
                 self.img_lbl.setPixmap(self.im)
                 self.img_lbl.setScaledContents(True)
             else:
-                img_path = os.path.join(self.paths_data["Root_Path"],"./demo.png")
+                img_path = os.path.join(self.paths_data["Root_Path"],"demo.png")
                 self.img_path = img_path
                 self.im = QtGui.QPixmap(self.img_path)
                 self.img_lbl.setPixmap(self.im)
@@ -798,7 +798,7 @@ class GUI_load(QMainWindow):
             recipes = ["1", "2", "3", "4", "5"]
             if recipe_no not in recipes:
                 recipe_no = "0"
-                self.pdf_path = os.path.join(self.paths_data["Root_Path"],"./invalid.pdf")
+                self.pdf_path = os.path.join(self.paths_data["Root_Path"],"invalid.pdf")
             else:
                 self.pdf_path = self.paths_data["last_pdf_path"][f"recipe_0{recipe_no}"]
             if os.path.exists(self.pdf_path):
@@ -806,7 +806,7 @@ class GUI_load(QMainWindow):
                 self.zoom_factor = 1.0
                 self.display_page()
             else:
-                self.pdf_path = os.path.join(self.paths_data["Root_Path"],"./demo.pdf")
+                self.pdf_path = os.path.join(self.paths_data["Root_Path"],"demo.pdf")
                 if os.path.exists(self.pdf_path):
                     self.doc = fitz.open(self.pdf_path)
                     self.zoom_factor = 1.0
