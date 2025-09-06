@@ -1,5 +1,6 @@
 {
-    "Root_Path": "D:/Program/CTPL_UAPR119_ZONE_02/",
+    "Root_Path": "D:/Sagar_OneDrive/OneDrive - Cybernetik Technologies Pvt Ltd/cybernetik/onsite/UAPR119/Zone2/CTPL_UAPR119_ZONE_02/",
+    "Root_Path1": "D:/Program/CTPL_UAPR119_ZONE_02/",
     "Development_Path": "D:/Sagar_OneDrive/OneDrive - Cybernetik Technologies Pvt Ltd/cybernetik/onsite/UAPR119/Zone2/CTPL_UAPR119_ZONE_02/",
     "image_path": "C:/Users/Ctplvc2/PycharmProjects/Projects/UAPR119/STN_img/STN_01.png",
     "inputs": {
@@ -45,30 +46,28 @@
         "recipe_01": [
             "00,Wait For Home",
             "10,Scan Battery Id",
-            "30,ksalksfd",
-            "40,kaka"
+            "20,Process 1",
+            "30,Process 2"
         ],
         "recipe_02": [
             "00,Wait For Home",
-            "10,Scan Battery Id",
-            "20,Step01 Chek All Nuggets Bottom Side & Top Side"
+            "10,Scan Battery Id"
         ],
         "recipe_03": [
             "00,Wait For Home",
-            "10,Scan Battery Id",
-            "20,Step01 Chek All Nuggets Bottom Side & Top Side",
-            "30,Waitting For Double Hand Push Button",
-            "asdfasdf,asdfasdf"
+            "10,Scan Battery Id"
         ],
         "recipe_04": [
-            "12,123",
-            "233,123"
+            "00,wait",
+            "10,Scan Battery Id",
+            "20,Process 1",
+            "30,Process 2"
         ],
         "recipe_05": [
-            "qsas,112as",
-            "q423,asdf",
-            "234,3sf",
-            "23,sdaf"
+            "10,112as",
+            "20,asdf",
+            "30,3sf",
+            "40,sdaf"
         ]
     },
     "recipe_img_path": {
