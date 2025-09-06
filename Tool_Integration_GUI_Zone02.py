@@ -391,7 +391,7 @@ class GUI_load(QMainWindow):
             if self.station_name != "05":
                 self.Screw_position.setText(str(values[0][34]))
             self.recipe_no = str(values[0][36]).strip()
-            if values[0][36] != self.temp or self.isreloaded:
+            if values[0][36] != self.temp:
                 self.loadDataFromFile(str(values[0][36]))
                 self.IMG_load(str(values[0][36]))
                 self.load_pdf(str(values[0][36]))
