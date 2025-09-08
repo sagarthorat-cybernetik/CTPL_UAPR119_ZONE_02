@@ -20,7 +20,7 @@ import requests
 import re
 import struct
 import shutil
-from datetime import datetime,time
+from datetime import datetime
 from run import PlcMeter
 from log_data import Log_data
 
