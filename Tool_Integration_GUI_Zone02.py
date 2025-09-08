@@ -20,7 +20,7 @@ import requests
 import re
 import struct
 import shutil
-from datetime import datetime
+from datetime import datetime,time
 from run import PlcMeter
 from log_data import Log_data
 
@@ -401,9 +401,7 @@ class GUI_load(QMainWindow):
             self.shift = str(values[0][37])
             # print(values[0][95])
             # values[0][95] = 1
-            values[0][80] = 0
-            if values[0][80] == 1:
-                self.copy_files()
+
             # Alarm status
             self.Alarm_Status(alarm = values[0][36])
 
@@ -553,6 +551,14 @@ class GUI_load(QMainWindow):
             currentDateTime = QDateTime.currentDateTime()
             formattedDateTime = currentDateTime.toString("dd/MM/yyyy hh:mm:ss AP")
             self.Auto_lbl.setText(formattedDateTime)
+            # Convert QDateTime -> Python datetime
+            now = currentDateTime.toPyDateTime()
+            # Build today's 23:59:59
+            today_last_second = datetime.combine(now.date(), time(23, 59, 59))
+
+            web_station = ["03", "04", "07"]
+            if now == today_last_second and self.station_name in web_station:
+                self.copy_files()
         except:
             print("Facing Error During Data Time Update")
 

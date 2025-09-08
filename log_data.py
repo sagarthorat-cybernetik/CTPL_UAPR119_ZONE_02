@@ -67,7 +67,7 @@ class Log_data():
             current_datetime = QDateTime.currentDateTime().toString("yyyy-MM-dd hh:mm:ss")
 
             try:
-                self.shift_num = self.main_window.shift
+                self.shift_num = chr(self.main_window.shift)
                 self.battery_id = self.main_window.battery_id1
                 self.battery_id2 = self.main_window.battery_id2
                 self.positions = self.main_window.position_input_2.text()
@@ -89,7 +89,6 @@ class Log_data():
                         conn.commit()
                         cursor.close()
                         conn.close()
-                        self.updatevalues()
                         self.main_window.sendstatusforvisualinspection(1)
                     else:
                         print("Failed to connect to the database.")
@@ -109,11 +108,10 @@ class Log_data():
                         conn.commit()
                         cursor.close()
                         conn.close()
-                        self.updatevalues()
                         self.main_window.sendstatusforvisualinspection(1)
                     else:
                         print("Failed to connect to the database.")
-
+                self.updatevalues()
             except Exception as e:
                 print(f"failed to connect to the database: {e}")
                 QMessageBox.critical(self.main_window, "Error", f"Error inserting or updating data: {e}")
@@ -149,7 +147,6 @@ class Log_data():
                         conn.commit()
                         cursor.close()
                         conn.close()
-                        self.updatevalues()
                         self.main_window.sendstatusforvisualinspection(2)
                     else:
                         print("Failed to connect to the database.")
@@ -169,11 +166,10 @@ class Log_data():
                         conn.commit()
                         cursor.close()
                         conn.close()
-                        self.updatevalues()
                         self.main_window.sendstatusforvisualinspection(2)
                     else:
                         print("Failed to connect to the database.")
-
+                self.updatevalues()
             except Exception as e:
                 print(f"failed to connect to the database: {e}")
                 QMessageBox.critical(self.main_window, "Error", f"Error inserting or updating data: {e}")

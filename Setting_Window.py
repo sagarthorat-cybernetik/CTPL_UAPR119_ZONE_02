@@ -21,7 +21,7 @@ class Ui_SecondWindow(QMainWindow):
             # station_name input
             self.station_input.addItems(["01", "02", "03", "04","05", "06", "07", "08","09", "10", "11", "12","13","14","15","16","17","18","19","20"])  # Set initial items#
             self.station_input.currentIndexChanged.connect(self.station_name_change)
-            self.recipe_input.addItems(["2.3 Kwh mooving", "Lectrix 2.3kwh", "Triangular _8S4P", "Smart Battery","Triangular _16S2P"])  # Set initial items#
+            self.recipe_input.addItems(["2.3 Kwh mooving", "Smart Battery", "Triangular _8S4P", "Triangular_16S2P", "Future Model"])  # Set initial items#
             self.recipe_input.currentIndexChanged.connect(self.recipe_name_change)
             self.station_name = "01"
             self.recipe_name = "01"
