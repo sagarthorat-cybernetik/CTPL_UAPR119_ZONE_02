@@ -547,6 +547,7 @@ class GUI_load(QMainWindow):
 
     # ===== Date time----------------------------
     def update_datetime(self):
+        from datetime import time
         try:
             currentDateTime = QDateTime.currentDateTime()
             formattedDateTime = currentDateTime.toString("dd/MM/yyyy hh:mm:ss AP")
@@ -676,7 +677,8 @@ class GUI_load(QMainWindow):
                     QtWidgets.QMessageBox.information(self, "Welcome", f"Hello, {name}!")
                     # you can store the name in a variable
                     self.loggedinuser = name.strip()
-                    self.operator_2.setText(self.loggedinuser)
+                    if self.station_name =="05":
+                        self.operator_2.setText(self.loggedinuser)
                 else:
                     QtWidgets.QMessageBox.warning(self, "Invalid", "Operator name cannot be empty.")
                     return
