@@ -1063,11 +1063,11 @@
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="defect_input_4">
+                 <widget class="QLineEdit" name="position_input_7">
                   <property name="minimumSize">
                    <size>
                     <width>170</width>
-                    <height>40</height>
+                    <height>35</height>
                    </size>
                   </property>
                   <property name="maximumSize">
@@ -1289,7 +1289,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>Weld Miss</string>
+                   <string>Weld Miss/No Weld</string>
                   </property>
                  </widget>
                 </item>
