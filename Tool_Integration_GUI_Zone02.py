@@ -196,7 +196,8 @@ class GUI_load(QMainWindow):
         self.shift = "demo"
         self.battery_id1 = None
         self.battery_id2 = None
-
+        self.current_recipe = "1"
+        self.cycletime = 0
         if station_no in web_station:
             self.Load_Webpage(station_no)
         if station_no =="05":
@@ -399,6 +400,8 @@ class GUI_load(QMainWindow):
                 self.temp = values[0][36]
 
             self.shift = str(values[0][37])
+            self.current_recipe = str(values[0][38])
+            self.cycletime = str(values[0][30])
             # print(values[0][95])
             # values[0][95] = 1
 

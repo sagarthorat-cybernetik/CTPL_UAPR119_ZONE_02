@@ -73,6 +73,8 @@ class Log_data():
                 self.positions = self.main_window.position_input_2.text()
                 self.inspectby = self.main_window.loggedinuser
                 self.status = 1
+                self.cycletime = self.main_window.cycletime
+                self.recipe = self.main_window.current_recipe
                 if self.battery_id:
                     conn = self.connect_db()
                     if conn:
