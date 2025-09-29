@@ -1688,7 +1688,7 @@
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QLabel" name="Actual_prod_count_2">
+                 <widget class="QLabel" name="operator_2">
                   <property name="minimumSize">
                    <size>
                     <width>170</width>
