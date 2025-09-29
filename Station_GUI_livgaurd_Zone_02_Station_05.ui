@@ -1289,7 +1289,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>Weld Miss/No Weld</string>
+                   <string>Weld Miss</string>
                   </property>
                  </widget>
                 </item>
