@@ -5,6 +5,11 @@ import pyodbc
 
 class Log_data():
     def __init__(self,main_window):
+        self.shifting_position = None
+        self.weld_shift_position = None
+        self.weld_miss_position = None
+        self.weld_weak_position = None
+        self.weld_burn_position = None
         self.cycletime = None
         self.recipe = None
         self.battery_id2 = None
@@ -47,8 +52,8 @@ class Log_data():
         self.main_window.topbottom_input_5.addItems([" ", "Top", "Bottom", "Top & Bottom"])  # Set initial items#
         self.main_window.topbottom_input_5.currentIndexChanged.connect(self.topbottom_inputs_change)
         # Defect
-        self.main_window.defect_input_4.addItems([" ", "Weld Weak", "Shifting", "Weld Shift", "Weld Burn", "Weld Miss/No Weld"])  # Set initial items#
-        self.main_window.defect_input_4.currentIndexChanged.connect(self.defect_inputs_change)
+        # self.main_window.defect_input_4.addItems([" ", "Weld Weak", "Shifting", "Weld Shift", "Weld Burn", "Weld Miss/No Weld"])  # Set initial items#
+        # self.main_window.defect_input_4.currentIndexChanged.connect(self.defect_inputs_change)
 
     def topbottom_inputs_change(self, index):
         self.topbottom = self.main_window.topbottom_input_5.itemText(index)
@@ -72,21 +77,28 @@ class Log_data():
                 self.shift_num = chr(int(self.main_window.shift))
                 self.battery_id = self.main_window.battery_id1
                 self.battery_id2 = self.main_window.battery_id2
-                self.positions = self.main_window.position_input_2.text()
+                self.weld_burn_position = self.main_window.position_input_7.text()
+                self.weld_weak_position = self.main_window.position_input_2.text()
+                self.weld_miss_position = self.main_window.position_input_3.text()
+                self.weld_shift_position = self.main_window.position_input_6.text()
+                self.shifting_position = self.main_window.position_input_5.text()
+
                 self.inspectby = self.main_window.loggedinuser
                 self.status = 1
                 self.recipe = self.main_window.recipe_no
                 self.cycletime = self.main_window.cycletime
+
                 if self.battery_id:
                     conn = self.connect_db()
                     if conn:
                         cursor = conn.cursor()
                         # If the row does not exist, insert a new one
                         query = """INSERT INTO [dbo].[Visual_Inspection_Station]
-                                   ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [Defect], [Position], [Operator], [Status], [Recipe], [CycleTime])
-                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+                                   ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime])
+                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
                         values = (
-                            current_datetime, self.shift_num, self.battery_id, self.topbottom, self.defect, self.positions,
+                            current_datetime, self.shift_num, self.battery_id, self.topbottom, self.weld_burn_position,
+                            self.weld_weak_position,self.weld_miss_position, self.weld_shift_position, self.shifting_position,
                             self.inspectby, self.status,self.recipe, self.cycletime)
                         cursor.execute(query, values)
                         QMessageBox.information(self.main_window, "Success", "Data inserted successfully!")
@@ -101,12 +113,15 @@ class Log_data():
                     if conn:
                         cursor = conn.cursor()
                         # If the row does not exist, insert a new one
+                        # If the row does not exist, insert a new one
                         query = """INSERT INTO [dbo].[Visual_Inspection_Station]
-                                   ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [Defect], [Position], [Operator], [Status], [Recipe], [CycleTime])
-                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+                                                           ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime])
+                                                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
                         values = (
-                            current_datetime, self.shift_num, self.battery_id2, self.topbottom, self.defect, self.positions,
-                            self.inspectby, self.status,self.recipe, self.cycletime)
+                            current_datetime, self.shift_num, self.battery_id2, self.topbottom, self.weld_burn_position,
+                            self.weld_weak_position, self.weld_miss_position, self.weld_shift_position,
+                            self.shifting_position,
+                            self.inspectby, self.status, self.recipe, self.cycletime)
                         cursor.execute(query, values)
                         QMessageBox.information(self.main_window, "Success", "Data inserted successfully!")
                         conn.commit()
@@ -132,7 +147,11 @@ class Log_data():
                 self.shift_num = chr(int(self.main_window.shift))
                 self.battery_id = self.main_window.battery_id1
                 self.battery_id2 = self.main_window.battery_id2
-                self.positions = self.main_window.position_input_2.text()
+                self.weld_burn_position = self.main_window.position_input_7.text()
+                self.weld_weak_position = self.main_window.position_input_2.text()
+                self.weld_miss_position = self.main_window.position_input_3.text()
+                self.weld_shift_position = self.main_window.position_input_6.text()
+                self.shifting_position = self.main_window.position_input_5.text()
                 self.inspectby = self.main_window.loggedinuser
                 self.status = 2
                 self.recipe = self.main_window.recipe_no
@@ -143,12 +162,15 @@ class Log_data():
                         cursor = conn.cursor()
                         # If the row does not exist, insert a new one
 
+                        # If the row does not exist, insert a new one
                         query = """INSERT INTO [dbo].[Visual_Inspection_Station]
-                                   ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [Defect], [Position], [Operator], [Status], [Recipe], [CycleTime])
-                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+                                                           ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime])
+                                                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
                         values = (
-                            current_datetime, self.shift_num, self.battery_id, self.topbottom, self.defect, self.positions,
-                            self.inspectby, self.status,self.recipe, self.cycletime)
+                            current_datetime, self.shift_num, self.battery_id, self.topbottom, self.weld_burn_position,
+                            self.weld_weak_position, self.weld_miss_position, self.weld_shift_position,
+                            self.shifting_position,
+                            self.inspectby, self.status, self.recipe, self.cycletime)
                         cursor.execute(query, values)
                         QMessageBox.information(self.main_window, "Success", "Data inserted successfully!")
                         conn.commit()
@@ -162,12 +184,15 @@ class Log_data():
                     if conn:
                         cursor = conn.cursor()
                         # If the row does not exist, insert a new one
+                        # If the row does not exist, insert a new one
                         query = """INSERT INTO [dbo].[Visual_Inspection_Station]
-                                   ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [Defect], [Position], [Operator], [Status], [Recipe], [CycleTime])
-                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+                                                           ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime])
+                                                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
                         values = (
-                            current_datetime, self.shift_num, self.battery_id2, self.topbottom, self.defect, self.positions,
-                            self.inspectby, self.status,self.recipe, self.cycletime)
+                            current_datetime, self.shift_num, self.battery_id2, self.topbottom, self.weld_burn_position,
+                            self.weld_weak_position, self.weld_miss_position, self.weld_shift_position,
+                            self.shifting_position,
+                            self.inspectby, self.status, self.recipe, self.cycletime)
 
                         cursor.execute(query, values)
                         QMessageBox.information(self.main_window, "Success", "Data inserted successfully!")
@@ -188,5 +213,8 @@ class Log_data():
     def updatevalues(self):
         # update the values of  self.main_window.position_input_2.text(), self.topbottom and  self.defect
         self.main_window.position_input_2.setText("")
+        self.main_window.position_input_3.setText("")
+        self.main_window.position_input_6.setText("")
+        self.main_window.position_input_5.setText("")
+        self.main_window.position_input_7.setText("")
         self.main_window.topbottom_input_5.setCurrentIndex(0)
-        self.main_window.defect_input_4.setCurrentIndex(0)
