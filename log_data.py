@@ -68,6 +68,28 @@ class Log_data():
             print(f"Database connection error: {e}")
             return None
 
+    def is_duplicate_latest(self, battery_id):
+        """Check if the latest inserted battery ID matches the current one."""
+        try:
+            conn = self.connect_db()
+            if conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                    SELECT TOP 1 ModuleBarcodeData 
+                    FROM [dbo].[Visual_Inspection_Station]
+                    ORDER BY ID DESC
+                """)
+                row = cursor.fetchone()
+                cursor.close()
+                conn.close()
+
+                if row and row[0] == battery_id:
+                    return True  # Duplicate
+        except Exception as e:
+            print("Duplicate check error:", e)
+
+        return False  # Not duplicate
+
     def accept(self):
         # Disable both buttons immediately
         self.main_window.accept_btn_4.setEnabled(False)
@@ -92,6 +114,17 @@ class Log_data():
                     self.recipe = self.main_window.recipe_no
                     self.cycletime = self.main_window.cycletime
 
+                    # -------------------- DUPLICATE CHECK --------------------
+                    if self.battery_id and self.is_duplicate_latest(self.battery_id):
+                        QMessageBox.critical(self.main_window, "Duplicate Entry",
+                                             f"Duplicate entry not allowed! Latest record already has {self.battery_id}.")
+                        return
+
+                    if self.battery_id2 and self.is_duplicate_latest(self.battery_id2):
+                        QMessageBox.critical(self.main_window, "Duplicate Entry",
+                                             f"Duplicate entry not allowed! Latest record already has {self.battery_id2}.")
+                        return
+                    # ----------------------------------------------------------
                     if self.battery_id:
                         conn = self.connect_db()
                         if conn:
@@ -170,6 +203,19 @@ class Log_data():
                     self.status = 2
                     self.recipe = self.main_window.recipe_no
                     self.cycletime = self.main_window.cycletime
+
+                    # -------------------- DUPLICATE CHECK --------------------
+                    if self.battery_id and self.is_duplicate_latest(self.battery_id):
+                        QMessageBox.critical(self.main_window, "Duplicate Entry",
+                                             f"Duplicate entry not allowed! Latest record already has {self.battery_id}.")
+                        return
+
+                    if self.battery_id2 and self.is_duplicate_latest(self.battery_id2):
+                        QMessageBox.critical(self.main_window, "Duplicate Entry",
+                                             f"Duplicate entry not allowed! Latest record already has {self.battery_id2}.")
+                        return
+                    # ----------------------------------------------------------
+
                     if self.battery_id:
                         conn = self.connect_db()
                         if conn:
