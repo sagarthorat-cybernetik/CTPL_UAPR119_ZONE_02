@@ -69,145 +69,164 @@ class Log_data():
             return None
 
     def accept(self):
-        if self.main_window.is_logged_in:
-            # Use current datetime for Created_At and Modified_At
-            current_datetime = QDateTime.currentDateTime().toString("yyyy-MM-dd hh:mm:ss")
+        # Disable both buttons immediately
+        self.main_window.accept_btn_4.setEnabled(False)
+        self.main_window.rework_btn_4.setEnabled(False)
+        try:
+            if self.main_window.is_logged_in:
+                # Use current datetime for Created_At and Modified_At
+                current_datetime = QDateTime.currentDateTime().toString("yyyy-MM-dd hh:mm:ss")
 
-            try:
-                self.shift_num = chr(int(self.main_window.shift))
-                self.battery_id = self.main_window.battery_id1
-                self.battery_id2 = self.main_window.battery_id2
-                self.weld_burn_position = self.main_window.position_input_7.text()
-                self.weld_weak_position = self.main_window.position_input_2.text()
-                self.weld_miss_position = self.main_window.position_input_3.text()
-                self.weld_shift_position = self.main_window.position_input_6.text()
-                self.shifting_position = self.main_window.position_input_5.text()
+                try:
+                    self.shift_num = chr(int(self.main_window.shift))
+                    self.battery_id = self.main_window.battery_id1
+                    self.battery_id2 = self.main_window.battery_id2
+                    self.weld_burn_position = self.main_window.position_input_7.text()
+                    self.weld_weak_position = self.main_window.position_input_2.text()
+                    self.weld_miss_position = self.main_window.position_input_3.text()
+                    self.weld_shift_position = self.main_window.position_input_6.text()
+                    self.shifting_position = self.main_window.position_input_5.text()
 
-                self.inspectby = self.main_window.loggedinuser
-                self.status = 1
-                self.recipe = self.main_window.recipe_no
-                self.cycletime = self.main_window.cycletime
+                    self.inspectby = self.main_window.loggedinuser
+                    self.status = 1
+                    self.recipe = self.main_window.recipe_no
+                    self.cycletime = self.main_window.cycletime
 
-                if self.battery_id:
-                    conn = self.connect_db()
-                    if conn:
-                        cursor = conn.cursor()
-                        # If the row does not exist, insert a new one
-                        query = """INSERT INTO [dbo].[Visual_Inspection_Station]
-                                   ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime])
-                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
-                        values = (
-                            current_datetime, self.shift_num, self.battery_id, self.topbottom, self.weld_burn_position,
-                            self.weld_weak_position,self.weld_miss_position, self.weld_shift_position, self.shifting_position,
-                            self.inspectby, self.status,self.recipe, self.cycletime)
-                        cursor.execute(query, values)
-                        QMessageBox.information(self.main_window, "Success", "Data inserted successfully!")
-                        conn.commit()
-                        cursor.close()
-                        conn.close()
-                        self.main_window.sendstatusforvisualinspection(1)
-                    else:
-                        print("Failed to connect to the database.")
-                if self.battery_id2:
-                    conn = self.connect_db()
-                    if conn:
-                        cursor = conn.cursor()
-                        # If the row does not exist, insert a new one
-                        # If the row does not exist, insert a new one
-                        query = """INSERT INTO [dbo].[Visual_Inspection_Station]
-                                                           ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime])
-                                                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
-                        values = (
-                            current_datetime, self.shift_num, self.battery_id2, self.topbottom, self.weld_burn_position,
-                            self.weld_weak_position, self.weld_miss_position, self.weld_shift_position,
-                            self.shifting_position,
-                            self.inspectby, self.status, self.recipe, self.cycletime)
-                        cursor.execute(query, values)
-                        QMessageBox.information(self.main_window, "Success", "Data inserted successfully!")
-                        conn.commit()
-                        cursor.close()
-                        conn.close()
-                        self.main_window.sendstatusforvisualinspection(1)
-                    else:
-                        print("Failed to connect to the database.")
-                self.updatevalues()
-            except Exception as e:
-                print(f"failed to connect to the database: {e}")
-                QMessageBox.critical(self.main_window, "Error", f"Error inserting or updating data: {e}")
-        else:
-            QMessageBox.critical(self.main_window, "Log in Error", f"Please Log in Before accepting")
+                    if self.battery_id:
+                        conn = self.connect_db()
+                        if conn:
+                            cursor = conn.cursor()
+                            # If the row does not exist, insert a new one
+                            query = """INSERT INTO [dbo].[Visual_Inspection_Station]
+                                       ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime])
+                                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+                            values = (
+                                current_datetime, self.shift_num, self.battery_id, self.topbottom, self.weld_burn_position,
+                                self.weld_weak_position,self.weld_miss_position, self.weld_shift_position, self.shifting_position,
+                                self.inspectby, self.status,self.recipe, self.cycletime)
+                            cursor.execute(query, values)
+                            QMessageBox.information(self.main_window, "Success", "Data inserted successfully!")
+                            conn.commit()
+                            cursor.close()
+                            conn.close()
+                            self.main_window.sendstatusforvisualinspection(1)
+                        else:
+                            print("Failed to connect to the database.")
+                    if self.battery_id2:
+                        conn = self.connect_db()
+                        if conn:
+                            cursor = conn.cursor()
+                            # If the row does not exist, insert a new one
+                            # If the row does not exist, insert a new one
+                            query = """INSERT INTO [dbo].[Visual_Inspection_Station]
+                                                               ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime])
+                                                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+                            values = (
+                                current_datetime, self.shift_num, self.battery_id2, self.topbottom, self.weld_burn_position,
+                                self.weld_weak_position, self.weld_miss_position, self.weld_shift_position,
+                                self.shifting_position,
+                                self.inspectby, self.status, self.recipe, self.cycletime)
+                            cursor.execute(query, values)
+                            QMessageBox.information(self.main_window, "Success", "Data inserted successfully!")
+                            conn.commit()
+                            cursor.close()
+                            conn.close()
+                            self.main_window.sendstatusforvisualinspection(1)
+                        else:
+                            print("Failed to connect to the database.")
+                    self.updatevalues()
+                except Exception as e:
+                    print(f"failed to connect to the database: {e}")
+                    QMessageBox.critical(self.main_window, "Error", f"Error inserting or updating data: {e}")
+            else:
+                QMessageBox.critical(self.main_window, "Log in Error", f"Please Log in Before accepting")
+
+        finally:
+            # ENABLE BUTTONS AFTER PROCESS IS DONE
+            self.main_window.accept_btn_4.setEnabled(True)
+            self.main_window.rework_btn_4.setEnabled(True)
 
 
     def sendtorework(self):
-        if self.main_window.is_logged_in:
 
-            # Use current datetime for Created_At and Modified_At
-            current_datetime = QDateTime.currentDateTime().toString("yyyy-MM-dd hh:mm:ss")
-            try:
-                self.shift_num = chr(int(self.main_window.shift))
-                self.battery_id = self.main_window.battery_id1
-                self.battery_id2 = self.main_window.battery_id2
-                self.weld_burn_position = self.main_window.position_input_7.text()
-                self.weld_weak_position = self.main_window.position_input_2.text()
-                self.weld_miss_position = self.main_window.position_input_3.text()
-                self.weld_shift_position = self.main_window.position_input_6.text()
-                self.shifting_position = self.main_window.position_input_5.text()
-                self.inspectby = self.main_window.loggedinuser
-                self.status = 2
-                self.recipe = self.main_window.recipe_no
-                self.cycletime = self.main_window.cycletime
-                if self.battery_id:
-                    conn = self.connect_db()
-                    if conn:
-                        cursor = conn.cursor()
-                        # If the row does not exist, insert a new one
+        self.main_window.accept_btn_4.setEnabled(False)
+        self.main_window.rework_btn_4.setEnabled(False)
 
-                        # If the row does not exist, insert a new one
-                        query = """INSERT INTO [dbo].[Visual_Inspection_Station]
-                                                           ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime])
-                                                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
-                        values = (
-                            current_datetime, self.shift_num, self.battery_id, self.topbottom, self.weld_burn_position,
-                            self.weld_weak_position, self.weld_miss_position, self.weld_shift_position,
-                            self.shifting_position,
-                            self.inspectby, self.status, self.recipe, self.cycletime)
-                        cursor.execute(query, values)
-                        QMessageBox.information(self.main_window, "Success", "Data inserted successfully!")
-                        conn.commit()
-                        cursor.close()
-                        conn.close()
-                        self.main_window.sendstatusforvisualinspection(2)
-                    else:
-                        print("Failed to connect to the database.")
-                if self.battery_id2:
-                    conn = self.connect_db()
-                    if conn:
-                        cursor = conn.cursor()
-                        # If the row does not exist, insert a new one
-                        # If the row does not exist, insert a new one
-                        query = """INSERT INTO [dbo].[Visual_Inspection_Station]
-                                                           ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime])
-                                                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
-                        values = (
-                            current_datetime, self.shift_num, self.battery_id2, self.topbottom, self.weld_burn_position,
-                            self.weld_weak_position, self.weld_miss_position, self.weld_shift_position,
-                            self.shifting_position,
-                            self.inspectby, self.status, self.recipe, self.cycletime)
+        try:
+            if self.main_window.is_logged_in:
 
-                        cursor.execute(query, values)
-                        QMessageBox.information(self.main_window, "Success", "Data inserted successfully!")
-                        conn.commit()
-                        cursor.close()
-                        conn.close()
-                        self.main_window.sendstatusforvisualinspection(2)
-                    else:
-                        print("Failed to connect to the database.")
-                self.updatevalues()
-            except Exception as e:
-                print(f"failed to connect to the database: {e}")
-                QMessageBox.critical(self.main_window, "Error", f"Error inserting or updating data: {e}")
-        else:
-            QMessageBox.critical(self.main_window, "Log in Error", f"Please Log in Before accepting")
+                # Use current datetime for Created_At and Modified_At
+                current_datetime = QDateTime.currentDateTime().toString("yyyy-MM-dd hh:mm:ss")
+                try:
+                    self.shift_num = chr(int(self.main_window.shift))
+                    self.battery_id = self.main_window.battery_id1
+                    self.battery_id2 = self.main_window.battery_id2
+                    self.weld_burn_position = self.main_window.position_input_7.text()
+                    self.weld_weak_position = self.main_window.position_input_2.text()
+                    self.weld_miss_position = self.main_window.position_input_3.text()
+                    self.weld_shift_position = self.main_window.position_input_6.text()
+                    self.shifting_position = self.main_window.position_input_5.text()
+                    self.inspectby = self.main_window.loggedinuser
+                    self.status = 2
+                    self.recipe = self.main_window.recipe_no
+                    self.cycletime = self.main_window.cycletime
+                    if self.battery_id:
+                        conn = self.connect_db()
+                        if conn:
+                            cursor = conn.cursor()
+                            # If the row does not exist, insert a new one
+
+                            # If the row does not exist, insert a new one
+                            query = """INSERT INTO [dbo].[Visual_Inspection_Station]
+                                                               ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime])
+                                                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+                            values = (
+                                current_datetime, self.shift_num, self.battery_id, self.topbottom, self.weld_burn_position,
+                                self.weld_weak_position, self.weld_miss_position, self.weld_shift_position,
+                                self.shifting_position,
+                                self.inspectby, self.status, self.recipe, self.cycletime)
+                            cursor.execute(query, values)
+                            QMessageBox.information(self.main_window, "Success", "Data inserted successfully!")
+                            conn.commit()
+                            cursor.close()
+                            conn.close()
+                            self.main_window.sendstatusforvisualinspection(2)
+                        else:
+                            print("Failed to connect to the database.")
+                    if self.battery_id2:
+                        conn = self.connect_db()
+                        if conn:
+                            cursor = conn.cursor()
+                            # If the row does not exist, insert a new one
+                            # If the row does not exist, insert a new one
+                            query = """INSERT INTO [dbo].[Visual_Inspection_Station]
+                                                               ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime])
+                                                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+                            values = (
+                                current_datetime, self.shift_num, self.battery_id2, self.topbottom, self.weld_burn_position,
+                                self.weld_weak_position, self.weld_miss_position, self.weld_shift_position,
+                                self.shifting_position,
+                                self.inspectby, self.status, self.recipe, self.cycletime)
+
+                            cursor.execute(query, values)
+                            QMessageBox.information(self.main_window, "Success", "Data inserted successfully!")
+                            conn.commit()
+                            cursor.close()
+                            conn.close()
+                            self.main_window.sendstatusforvisualinspection(2)
+                        else:
+                            print("Failed to connect to the database.")
+                    self.updatevalues()
+                except Exception as e:
+                    print(f"failed to connect to the database: {e}")
+                    QMessageBox.critical(self.main_window, "Error", f"Error inserting or updating data: {e}")
+            else:
+                QMessageBox.critical(self.main_window, "Log in Error", f"Please Log in Before accepting")
+
+        finally:
+            # ENABLE BUTTONS AFTER PROCESS IS DONE
+            self.main_window.accept_btn_4.setEnabled(True)
+            self.main_window.rework_btn_4.setEnabled(True)
 
 
     def updatevalues(self):
