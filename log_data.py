@@ -77,7 +77,7 @@ class Log_data():
                 cursor.execute("""
                     SELECT TOP 1 ModuleBarcodeData 
                     FROM [dbo].[Visual_Inspection_Station]
-                    ORDER BY ID DESC
+                    ORDER BY DateTime DESC
                 """)
                 row = cursor.fetchone()
                 cursor.close()
