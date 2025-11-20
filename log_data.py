@@ -19,7 +19,7 @@ class Log_data():
         self.battery_id = None
         self.shift_num = None
         self.main_window = main_window  # store reference
-
+        self.remark = None
         self.defect = None
         self.topbottom = None
         # Database connection
@@ -110,6 +110,7 @@ class Log_data():
                     self.shifting_position = self.main_window.position_input_5.text()
 
                     self.inspectby = self.main_window.loggedinuser
+                    self.remark = self.main_window.operator_2.text()
                     self.status = 1
                     self.recipe = self.main_window.recipe_no
                     self.cycletime = self.main_window.cycletime
@@ -131,12 +132,12 @@ class Log_data():
                             cursor = conn.cursor()
                             # If the row does not exist, insert a new one
                             query = """INSERT INTO [dbo].[Visual_Inspection_Station]
-                                       ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime])
-                                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+                                       ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime], [remark])
+                                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
                             values = (
                                 current_datetime, self.shift_num, self.battery_id, self.topbottom, self.weld_burn_position,
                                 self.weld_weak_position,self.weld_miss_position, self.weld_shift_position, self.shifting_position,
-                                self.inspectby, self.status,self.recipe, self.cycletime)
+                                self.inspectby, self.status,self.recipe, self.cycletime, self.remark)
                             cursor.execute(query, values)
                             QMessageBox.information(self.main_window, "Success", "Data inserted successfully!")
                             conn.commit()
@@ -152,13 +153,13 @@ class Log_data():
                             # If the row does not exist, insert a new one
                             # If the row does not exist, insert a new one
                             query = """INSERT INTO [dbo].[Visual_Inspection_Station]
-                                                               ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime])
-                                                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+                                                               ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime], [remark])
+                                                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)"""
                             values = (
                                 current_datetime, self.shift_num, self.battery_id2, self.topbottom, self.weld_burn_position,
                                 self.weld_weak_position, self.weld_miss_position, self.weld_shift_position,
                                 self.shifting_position,
-                                self.inspectby, self.status, self.recipe, self.cycletime)
+                                self.inspectby, self.status, self.recipe, self.cycletime, self.remark)
                             cursor.execute(query, values)
                             QMessageBox.information(self.main_window, "Success", "Data inserted successfully!")
                             conn.commit()
@@ -199,6 +200,8 @@ class Log_data():
                     self.weld_miss_position = self.main_window.position_input_3.text()
                     self.weld_shift_position = self.main_window.position_input_6.text()
                     self.shifting_position = self.main_window.position_input_5.text()
+                    self.remark = self.main_window.operator_2.text()
+
                     self.inspectby = self.main_window.loggedinuser
                     self.status = 2
                     self.recipe = self.main_window.recipe_no
@@ -224,13 +227,13 @@ class Log_data():
 
                             # If the row does not exist, insert a new one
                             query = """INSERT INTO [dbo].[Visual_Inspection_Station]
-                                                               ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime])
-                                                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+                                                               ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime],[remark])
+                                                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)"""
                             values = (
                                 current_datetime, self.shift_num, self.battery_id, self.topbottom, self.weld_burn_position,
                                 self.weld_weak_position, self.weld_miss_position, self.weld_shift_position,
                                 self.shifting_position,
-                                self.inspectby, self.status, self.recipe, self.cycletime)
+                                self.inspectby, self.status, self.recipe, self.cycletime,self.remark)
                             cursor.execute(query, values)
                             QMessageBox.information(self.main_window, "Success", "Data inserted successfully!")
                             conn.commit()
@@ -246,13 +249,13 @@ class Log_data():
                             # If the row does not exist, insert a new one
                             # If the row does not exist, insert a new one
                             query = """INSERT INTO [dbo].[Visual_Inspection_Station]
-                                                               ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime])
-                                                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+                                                               ([DateTime], [Shift], [ModuleBarcodeData], [Top_Bottom], [weld_burn_position], [weld_weak_position],[weld_miss_position] ,[weld_shift_position],[shifting_position], [Operator], [Status], [Recipe], [CycleTime],[remark])
+                                                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)"""
                             values = (
                                 current_datetime, self.shift_num, self.battery_id2, self.topbottom, self.weld_burn_position,
                                 self.weld_weak_position, self.weld_miss_position, self.weld_shift_position,
                                 self.shifting_position,
-                                self.inspectby, self.status, self.recipe, self.cycletime)
+                                self.inspectby, self.status, self.recipe, self.cycletime , self.remark)
 
                             cursor.execute(query, values)
                             QMessageBox.information(self.main_window, "Success", "Data inserted successfully!")
@@ -282,4 +285,5 @@ class Log_data():
         self.main_window.position_input_6.setText("")
         self.main_window.position_input_5.setText("")
         self.main_window.position_input_7.setText("")
+        self.main_window.remark.setText("")
         self.main_window.topbottom_input_5.setCurrentIndex(0)

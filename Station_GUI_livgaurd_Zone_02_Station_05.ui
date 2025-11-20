@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1702</width>
+    <width>1719</width>
     <height>1069</height>
    </rect>
   </property>
@@ -1664,7 +1664,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>Operator</string>
+                   <string>Remark</string>
                   </property>
                  </widget>
                 </item>
@@ -2639,7 +2639,7 @@
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>596</width>
+                         <width>613</width>
                          <height>780</height>
                         </rect>
                        </property>
