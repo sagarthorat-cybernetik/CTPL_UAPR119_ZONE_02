@@ -285,5 +285,5 @@ class Log_data():
         self.main_window.position_input_6.setText("")
         self.main_window.position_input_5.setText("")
         self.main_window.position_input_7.setText("")
-        self.main_window.remark.setText("")
+        self.main_window.operator_2.setText("")
         self.main_window.topbottom_input_5.setCurrentIndex(0)
